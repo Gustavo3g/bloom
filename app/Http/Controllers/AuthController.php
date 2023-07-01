@@ -21,10 +21,13 @@ class AuthController extends Controller
     public function register()
     {
         $credentials = request()->validate([
-            'name' => 'required',
-            'email' => 'required',
+            'name' => 'required|max:250',
+            'email' => 'required|unique:users',
             'password' => 'required'
         ]);
+        if (User::where('email',$credentials['email'])){
+            return response(['message' => 'O email ultilizado já existe na base de dados.'],400);
+        }
 
          User::create([
             'name' => $credentials['name'],
