@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Match\MatchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,4 +30,11 @@ Route::group([
 
 });
 
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'match'
+], function($router){
 
+    Route::get('/peoples',[MatchController::class, 'searchCompatiblePeople']);
+
+});
